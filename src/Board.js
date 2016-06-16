@@ -158,44 +158,32 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      var found = 0;
-      var found1 = 0;
+      var rowIndex, colIndex; 
       var board = this.rows(); 
-      var start = majorDiagonalColumnIndexAtFirstRow;
-      var boardsize = board.length;
-      // length = 4
-      if (start >= 0) {
-        var end  = (boardsize - start); 
-      } else {
-        var end  = (boardsize - (start * -1));
-      }
+      var size = this.get('n'); 
+      var input = majorDiagonalColumnIndexAtFirstRow; 
+      var count = 0; 
 
-
-      if (start === 0) {
-        for (var i = 0; i < end; i++) {
-          if (board[i][i] === 1) {
-            found++; 
+      if (input < 0) {
+        colIndex = 0; 
+        rowIndex = Math.abs(input); 
+        for (rowIndex; rowIndex < size; rowIndex++) {
+          if (board[rowIndex][colIndex] === 1) {
+            count++; 
           }
+          colIndex++; 
+        } 
+      } else {
+        rowIndex = 0; 
+        colIndex = input; 
+        for (colIndex; colIndex < size; colIndex++) {
+          if (board[rowIndex][colIndex] === 1) {
+            count++; 
+          }
+          rowIndex++; 
         }
       }
-      
-      for (var i = 0; i < end; i++) {
-        if (start > 0) {
-
-          if (board[i][i + 1] === 1) {
-            found++; 
-          } 
-        }
-      
-       
-        if (start < 0) {   
-          if (board[i + 1][i] === 1) {
-            found1++; 
-          } 
-        }
-      }
-
-      if (found > 1 || found1 > 1) {
+      if (count > 1) {
         return true; 
       }
       return false; 
@@ -222,7 +210,7 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      var start, rowIndex, colIndex; 
+      var rowIndex, colIndex; 
       var board = this.rows(); 
       var size = this.get('n');
       var input = minorDiagonalColumnIndexAtFirstRow;
