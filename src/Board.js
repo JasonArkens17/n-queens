@@ -251,13 +251,13 @@
 
           // only run if start = 2
           if (start === 2 && (minorDiagonalColumnIndexAtFirstRow < 0)) {
-            if (board[i + 1][j + 1] === 1){
+            if (board[i + 1][j + 1] === 1) {
               found1++;
             }
           }
 
           if (start === 1 && (minorDiagonalColumnIndexAtFirstRow < 0)) {
-            if (board[i + 2][j + 2]){
+            if (board[i + 2][j + 2]) {
               found1++;
             }
           }
