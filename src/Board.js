@@ -195,10 +195,10 @@
         }
       }
 
-       if(found > 1 || found1 > 1) {
+      if (found > 1 || found1 > 1) {
         return true; 
-       }
-       return false; 
+      }
+      return false; 
     },
 
     // test if any major diagonals on this board contain conflicts
@@ -222,70 +222,51 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      var found = 0;
-      var found1 = 0;
+      var start, rowIndex, colIndex; 
       var board = this.rows(); 
-      var start = minorDiagonalColumnIndexAtFirstRow;
-      var boardsize = board.length;
+      var size = this.get('n');
+      var input = minorDiagonalColumnIndexAtFirstRow;
+      var count = 0;  
 
-      if (start > boardsize - 1) {
-        return "I hate you";
-      }
-      
-      if (start < 0) {
-        start = start * -1;
-      }
-
-      // var end  = (boardsize - start); 
-      var end = (start + 1);
-      var j = (end - 1); 
-      
-      for (i = 0; i < end; i++) {
-        if (start > 0 && (minorDiagonalColumnIndexAtFirstRow > 0)) {
-        
-          if (board[i][j] === 1) {
-            found++; 
+      if (input < size) {
+        rowIndex = 0; // sub for i
+        colIndex = input; //sub for j
+        for (colIndex; colIndex >= 0; colIndex--) {
+          if (board[rowIndex][colIndex] === 1) {
+            count++; 
           }
-        } 
-
-
-          // only run if start = 2
-          if (start === 2 && (minorDiagonalColumnIndexAtFirstRow < 0)) {
-            if (board[i + 1][j + 1] === 1) {
-              found1++;
-            }
-          }
-
-          if (start === 1 && (minorDiagonalColumnIndexAtFirstRow < 0)) {
-            if (board[i + 2][j + 2]) {
-              found1++;
-            }
-          }
-
-
-          j--; 
-        
+          rowIndex++; 
         }
+      } else {
+        rowIndex = (input - size) + 1; 
+        colIndex = size - 1; 
+        for (rowIndex; rowIndex < size; rowIndex++) {
+          if (board[rowIndex][colIndex] === 1) {
+            count++; 
+          }
+          colIndex--; 
+        }
+      }
 
-      
-      if (found > 1 || found1 > 1) {
+
+
+      if (count > 1) {
         return true; 
       }
-
       return false; // fixme
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
       var numOfMinorDiags = this.get('n');
-      var start = -numOfMinorDiags + 1;
+      var length = (numOfMinorDiags - 1) * 2;
 
-      for (var i = start; i < numOfMinorDiags; i++) {
+      for (var i = 0; i < length; i++) {
         if (this.hasMinorDiagonalConflictAt(i)) {
           return true; 
         } 
       }
-      return false; // fixme
+      return false;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
